@@ -4,12 +4,28 @@
   <title>Depot</title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+  <%= csrf_meta_tag %>
   
 </head>
 <body class='<%= controller.controller_name %>'>
-
-<%= yield %>
-
+  <div id="banner">
+    <%= image_tag("logo.png") %>
+    <%= @page_title || "Sanar bookshelf" %>
+  </div>
+  <div id="columns">
+    <div id="side">
+      <ul>
+        <li><a href="http://www.....">Home</a></li>
+        <li><a href="http://www.....">Questions</a></li>
+        <li><a href="http://www.....">News</a></li>
+        <li><a href="http://....../contact">Contact</a></li>
+        <li><%= Time.now %></li>
+      </ul>
+    </div>
+    <div id="main">
+      
+        <%= yield %>
+    </div>    
+  </div>
 </body>
 </html>

@@ -1,9 +1,11 @@
 require 'test_helper'
 
 class ProductTest < ActiveSupport::TestCase
-    fixtures :products
+    
+	fixtures :products
+
 def new_product(image_url)
-	Product.new(title: "My book ",
+	Product.new(title: "My book is big",
 	description: "Desc",
 	price: 1,
 	image_url: image_url)
@@ -35,15 +37,15 @@ test "product price must be positive" do
 	assert product.valid?
 end
 test "image_url" do 
-	ok = %w{ fred.gif fred.jpg fred.png FRED.Jpg FRED.JPG http://a.b.c/x/y/z/fred.gif }
+	ok = %w{ fred1.gif fred.jpg fred.png FRED.Jpg FRED.JPG http://a.b.c/x/y/z/fred.gif dummy.gif }
 	bad = %w{ fred.doc fred.gif/more fred.gif.more }
 	
 	ok.each do |name|
-		assert new_product(name).valid?, "#name shouldn't be invalid"
+		assert new_product(name).valid?, "#{name} shouldn't be invalid"
 	end
 	
 	bad.each do |name|
-		assert new_product(bad).invalid?, "#name should'nt be valid"
+		assert new_product(bad).invalid?, "#{name} should'nt be valid"
 	end
  
 end
@@ -60,7 +62,17 @@ end
 test "product is not valid without a unique title - i18n" do 
 	product = Product.new( title: products(:ruby).title, description: "yyy", price: 1, image_url: "fred.gif")
 	assert !product.save 
-	assert_equal I18n.translate('activerecord.errors.messages.taken'), product.errors[:title}.join('; ')
+	assert_equal I18n.translate('activerecord.errors.messages.taken'), product.errors[:title].join('; ')
 end 
+
+test "product title should have atleast 10 characters" do 
+	product = Product.new( title: "new",
+	description: "small title", 
+	price: 1,
+	image_url: "small_desc.jpg")
+	assert product.invalid?
+	assert_equal "is too short (minimum is 10 characters)", product.errors[:title].join('; ')
+end
+
 end
 
