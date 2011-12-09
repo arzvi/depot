@@ -9,3 +9,12 @@ two:
   title: MyString
   description: MyText
   image_url: MyString
+
+ruby:
+  title: Programming Ruby 1.9
+  description: 
+    Ruby is the fastest growing yada yada yada
+    yada yada to your toolbox. 
+  price: 49.50
+  image_url: ruby.png
+
